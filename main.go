@@ -7,6 +7,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"go.bmvs.io/ynab"
+	"go.bmvs.io/ynab/api/transaction"
 )
 
 func main() {
@@ -24,5 +25,17 @@ func main() {
 
 	for _, budget := range budgets {
 		fmt.Println(budget.Name + ", " + budget.ID)
+		f := &transaction.Filter{
+			Type: transaction.StatusUnapproved.Pointer(),
+		}
+
+		transactions, err := c.Transaction().GetTransactions(budget.ID, f)
+		if err != nil {
+			panic(err)
+		}
+
+		for _, transaction := range transactions {
+			fmt.Println(transaction.PayeeName)
+		}
 	}
 }
