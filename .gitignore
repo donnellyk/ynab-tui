@@ -16,3 +16,8 @@
 
 # Go workspace file
 go.work
+
+# ENV files
+.env
+
+ynab-tui
